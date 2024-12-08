@@ -765,6 +765,7 @@
     <None Include="App\engine\shader\glsl\quad_warp.frag">
       <Filter>Resource Files\engine\shader\glsl</Filter>
     </None>
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="App\example\test.mp3">
@@ -807,6 +808,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Oklab.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
