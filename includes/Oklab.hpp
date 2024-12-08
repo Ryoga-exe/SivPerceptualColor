@@ -13,7 +13,7 @@ struct Oklab
 	double b;
 
 	/// @brief アルファ | Alpha [0.0, 1.0]
-	double alpha;
+	double alpha = 1.0;
 
 	[[nodiscard]]
 	Oklab() = default;
@@ -27,19 +27,41 @@ struct Oklab
 	/// @param _b b 軸上の距離（青と黄の色合い）
 	/// @param alpha アルファ
 	[[nodiscard]]
-	constexpr Oklab(double _l, double _a, double _b, double alpha = 1.0) noexcept;
+	constexpr Oklab(double _l, double _a, double _b, double _alpha = 1.0) noexcept
+		: l{ _l }
+		, a{ _a }
+		, b{ _b }
+		, alpha{ _alpha } {}
 
 	/// @brief Oklab 色空間の色を作成します
 	/// @param oklab 色
 	/// @param alpha アルファ
 	[[nodiscard]]
-	constexpr Oklab(const Oklab& oklab, double alpha) noexcept;
+	constexpr Oklab(const Oklab& oklab, double _alpha) noexcept
+		: l{ oklab.l }
+		, a{ oklab.a }
+		, b{ oklab.b }
+		, alpha{ _alpha } {}
 
 	[[nodiscard]]
-	constexpr Oklab(Color color) noexcept;
+	Oklab(Color color) noexcept;
 
 	[[nodiscard]]
-	constexpr Oklab(const ColorF& color) noexcept;
+	Oklab(const ColorF& color) noexcept;
+
+	[[nodiscard]]
+	constexpr Oklab(const Vec3& oklab, double _alpha) noexcept
+		: l{ oklab.x }
+		, a{ oklab.y }
+		, b{ oklab.z }
+		, alpha{ _alpha } {}
+
+	[[nodiscard]]
+	constexpr Oklab(const Vec4& oklabWithAlpha) noexcept
+		: l{ oklabWithAlpha.x }
+		, a{ oklabWithAlpha.y }
+		, b{ oklabWithAlpha.z }
+		, alpha{ oklabWithAlpha.z } {}
 
 	[[nodiscard]]
 	constexpr double elem(size_t index) const noexcept;
@@ -157,8 +179,10 @@ struct Oklab
 	friend void Formatter(FormatData& formatData, const HSV& value);
 };
 
+// fmt
+
 template <>
-struct SIV3D_HIDDEN fmt::formatter<Oklab, s3d::char32>
+struct fmt::formatter<Oklab, s3d::char32>
 {
 	std::u32string tag;
 
